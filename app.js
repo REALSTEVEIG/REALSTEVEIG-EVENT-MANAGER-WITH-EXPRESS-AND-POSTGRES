@@ -14,6 +14,11 @@ const swaggerUI = require('swagger-ui-express')
 const YAML = require('yamljs')
 const swaggerDocument = YAML.load('./swagger.yaml')
 
+app.set('trust proxy', 1)
+app.use(helmet())
+app.use(cors())
+app.use(xss())
+app.use(expressRateLimmitter({windowMs : 60 * 1000, max : 60}))
 
 connectDB.sync({force : false}).then(() => {
     console.log("Drop and re-sync db.");

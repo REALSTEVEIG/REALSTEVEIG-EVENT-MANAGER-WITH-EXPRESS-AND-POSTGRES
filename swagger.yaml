@@ -1,0 +1,181 @@
+openapi: 3.0.0
+info:
+  title: EVENT MANAGER (EXPRESS & POSTGRESQL)
+  contact: {}
+  version: '1.0'
+servers:
+- url: https://event-manager.cyclic.app
+  variables: {}
+paths:
+  /admin/login:
+    post:
+      tags:
+      - ADMIN
+      summary: ADMIN LOGIN
+      operationId: ADMINLOGIN
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: '#/components/schemas/ADMINLOGINREQUEST'
+              - example:
+                  email: stephen@gmail.com
+                  password: admin123
+            example:
+              email: stephen@gmail.com
+              password: admin123
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security: []
+  /admin/users:
+    get:
+      tags:
+      - ADMIN
+      summary: ADMIN GETS ALL USERS
+      operationId: ADMINGETSALLUSERS
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security:
+      - bearer: []
+  /admin/users/{id}:
+    get:
+      tags:
+      - ADMIN
+      summary: ADMIN GETS A SINGLE USER
+      operationId: ADMINGETSASINGLEUSER
+      parameters:
+      - name: id
+        in: path
+        description: ''
+        required: true
+        style: simple
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security:
+      - bearer: []
+    patch:
+      tags:
+      - ADMIN
+      summary: ADMIN UPDATES A USER'S STATUS
+      operationId: ADMINUPDATESAUSER'SSTATUS
+      parameters:
+      - name: id
+        in: path
+        description: ''
+        required: true
+        style: simple
+        schema:
+          type: string
+      requestBody:
+        description: "The admin has the ability to change the state of any user from 'Pending Approval' into any of the following states : ['Approved', 'Rejected', 'Suspended']"
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: '#/components/schemas/ADMINUPDATESAUSERSSTATUSREQUEST'
+              - description: "The admin has the ability to change the state of any user from 'Pending Approval' into any of the following states : ['Approved', 'Rejected', 'Suspended']"
+                example:
+                  status: Suspended
+            example:
+              status: Suspended
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security:
+      - bearer: []
+  /register:
+    post:
+      tags:
+      - USER
+      summary: REGISTER USER
+      operationId: REGISTERUSER
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: '#/components/schemas/REGISTERUSERREQUEST'
+              - example:
+                  username: John Doe
+                  email: johndoe@gmail.com
+            example:
+              username: John Doe
+              email: johndoe@gmail.com
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security: []
+components:
+  schemas:
+    ADMINLOGINREQUEST:
+      title: ADMINLOGINREQUEST
+      required:
+      - email
+      - password
+      type: object
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+      example:
+        email: stephen@gmail.com
+        password: admin123
+    REGISTERUSERREQUEST:
+      title: REGISTERUSERREQUEST
+      required:
+      - username
+      - email
+      type: object
+      properties:
+        username:
+          type: string
+        email:
+          type: string
+      example:
+        username: John Doe
+        email: johndoe@gmail.com
+    ADMINUPDATESAUSERSSTATUSREQUEST:
+      title: ADMINUPDATESAUSERSSTATUSREQUEST
+      required:
+      - status
+      type: object
+      properties:
+        status:
+          type: string
+      example:
+        status: Suspended
+  securitySchemes:
+    bearer:
+      type: http
+      scheme: bearer
+security: []
+tags:
+- name: ADMIN
+  description: ''
+- name: USER
+  description: ''
