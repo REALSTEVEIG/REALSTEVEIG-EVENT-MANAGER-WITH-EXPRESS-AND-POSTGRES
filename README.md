@@ -2,7 +2,7 @@
 
 An Event manager app.
 ___
-This project was carried out by Ignatius Stephen Maduabuchi and it passes all requirements listed  below
+This project was carried out by Ignatius Stephen Maduabuchi.
 
 ### Requirements
 * Come up with the user object for registration.
